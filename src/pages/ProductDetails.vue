@@ -9,14 +9,18 @@
 
 <script>
 import { inject, computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 export default {
   props: ['pid'],
-  setup(props) {
+  setup() {
+    const route = useRoute();
+
     const products = inject('products');
-    const selectedProduct = computed(() => products.value.find(
-      product => product.id === props.pid
-    ));
+    const selectedProduct = computed(() =>
+      products.value.find((product) => product.id === route.params.pid)
+    );
+
     const title = computed(() => selectedProduct.value.title);
     const price = computed(() => selectedProduct.value.price);
     const description = computed(() => selectedProduct.value.description);
